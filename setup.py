@@ -18,8 +18,10 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'aiocache==0.12.2',
+        'shapely==2.1.2',
         'annotated-types==0.7.0',
         'anyio==4.4.0',
         'certifi==2024.8.30',

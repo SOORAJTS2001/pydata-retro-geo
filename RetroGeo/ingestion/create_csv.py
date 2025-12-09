@@ -8,7 +8,7 @@ from RetroGeo import GeoLocator, ThreadTypeEnum
 
 rev = GeoLocator()
 
-DB_PATH = "../data.db"
+DB_PATH = "../data/data.db"
 OUTPUT_CSV = "geo-boundaries.csv"
 locations = []
 metadata = {}

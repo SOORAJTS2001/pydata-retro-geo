@@ -8,14 +8,14 @@ rg = ReverseGeocoder()
 async def main():
     t = TicToc()
     rev = GeoLocator()
-    locations = [(-73.2404,43.2342)]
-    result = await rev.query(locations,mode=ThreadTypeEnum.MULTI_PROCESS)
-    print(result)
-
-    r = rg.nearest(43.2342, -73.2404)
-    print("Rust reverse")
-    print(r.admin1)
-    print(r.admin2)
+    # locations = [(-73.2404,43.2342)]
+    # result = rev.query(locations,mode=ThreadTypeEnum.SINGLE_PROCESS)
+    # print(result)
+    #
+    # r = rg.nearest(43.2342, -73.2404)
+    # print("Rust reverse")
+    # print(r.admin1)
+    # print(r.admin2)
     # locations = [
     #     (77.5946, 12.9716),  # Bengaluru, Karnataka, India
     #     (72.8777, 19.0760),  # Mumbai, Maharashtra, India
@@ -42,14 +42,19 @@ async def main():
     #     (-58.3816, -34.6037)  # Buenos Aires, Argentina
     # ]
     # print(await rev.getLocationFromCoordinates(locations,mode=ThreadTypeEnum.MULTI_THREADED))
-    # locations = []
-    # for _ in range(1000000):
-    #     lat = random.uniform(-90, 90)
-    #     lon = random.uniform(-180, 180)
-    #     locations.append((lon, lat))
+    locations = []
+    for _ in range(10000000):
+        lat = random.uniform(-90, 90)
+        lon = random.uniform(-180, 180)
+        locations.append((lon, lat))
+    t.tic()
+    rev.query(locations, mode=ThreadTypeEnum.SINGLE_PROCESS)
+    t.toc()
+    print(f"Using SingleProcess for {len(locations)} locations = ",t.tocvalue(),"seconds")
     # t.tic()
-    # await rev.query(locations, mode=ThreadTypeEnum.MULTI_PROCESS)
+    # rev.query(locations, mode=ThreadTypeEnum.SINGLE_PROCESS)
     # t.toc()
+    # print("SINGLEPROCESS")
 
 
 if __name__ == '__main__':

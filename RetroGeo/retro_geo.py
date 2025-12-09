@@ -8,9 +8,10 @@ import sys
 import sqlite3
 from pydantic import BaseModel, Field
 from shapely import wkb
-from thread_type import ThreadTypeEnum
+from RetroGeo.thread_type import ThreadTypeEnum
 from shapely.geometry import Point
 import numpy as np
+from importlib.resources import files
 if sys.platform == 'win32':
     # Windows C long is 32 bits, and the Python int is too large to fit inside.
     # Use the limit appropriate for a 32-bit integer as the max file size
@@ -21,13 +22,10 @@ from scipy.spatial import cKDTree
 from . import KD_Tree
 # Schema of the cities file created by this library
 RG_COLUMNS = ['name', 'shape_id', 'lat', 'lon', 'admin1', 'admin2']
-FILENAME = "geo-boundaries.csv"
-# WGS-84 major axis in kms
-A = 6378.137
 
-# WGS-84 eccentricity squared
-E2 = 0.00669437999014
-DB_PATH = "data.db"
+DB_PATH = files("RetroGeo.data") / "data.db"
+FILENAME = files("RetroGeo.data") / "geo-boundaries.csv"
+
 DEFAULT_K = 3
 
 class LocationBaseModel(BaseModel):
