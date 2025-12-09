@@ -8,7 +8,7 @@ import sys
 import sqlite3
 from pydantic import BaseModel, Field
 from shapely import wkb
-from RetroGeo.thread_type import ThreadTypeEnum
+from RetroGeo.thread_type import ProcessTypeEnum
 from shapely.geometry import Point
 import numpy as np
 from importlib.resources import files
@@ -59,7 +59,7 @@ class RGeocoder(object):
     The main reverse geocoder class
     """
 
-    def __init__(self, mode: ThreadTypeEnum, verbose=True):
+    def __init__(self, mode: ProcessTypeEnum, verbose=True):
         """ Class Instantiation
         Args:
         mode (int): Library supports the following two modes:
@@ -73,7 +73,7 @@ class RGeocoder(object):
         coordinates, self.locations = self.load()
         self.conn = sqlite3.connect(DB_PATH)
         self.curr = self.conn.cursor()
-        if mode == ThreadTypeEnum.SINGLE_PROCESS:  # Single-process
+        if mode == ProcessTypeEnum.SINGLE_PROCESS:  # Single-process
             self.tree = cKDTree(coordinates)
         else:  # Multi-process
             self.tree = KD_Tree.cKDTree_MP(coordinates)
@@ -121,7 +121,7 @@ class RGeocoder(object):
         Args:
         coordinates (list): List of tuple coordinates, i.e. [(latitude, longitude)]
         """
-        if self.mode == ThreadTypeEnum.SINGLE_PROCESS:
+        if self.mode == ProcessTypeEnum.SINGLE_PROCESS:
             _, indices = self.tree.query(coordinates, k=DEFAULT_K)
         else:
             _, indices = self.tree.pquery(coordinates, k=DEFAULT_K)

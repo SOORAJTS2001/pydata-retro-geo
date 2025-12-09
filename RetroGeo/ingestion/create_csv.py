@@ -4,7 +4,7 @@ import sqlite3
 
 from shapely import wkb
 
-from RetroGeo import GeoLocator, ThreadTypeEnum
+from RetroGeo import GeoLocator, ProcessTypeEnum
 
 rev = GeoLocator()
 
@@ -34,7 +34,7 @@ async def export_centroids_to_csv():
             centroid = polygon.centroid
             metadata[(centroid.y,centroid.x)] = [name,shape_id]
             locations.append((centroid.y,centroid.x))
-        result = await rev.query(locations, mode=ThreadTypeEnum.MULTI_PROCESS)
+        result = await rev.query(locations, mode=ProcessTypeEnum.MULTI_PROCESS)
         for location,data in result.items():
             writer.writerow([
                 metadata[location][0],

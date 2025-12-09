@@ -1,16 +1,13 @@
 import asyncio
-import random
-from pytictoc import TicToc
-from RetroGeo import GeoLocator, ThreadTypeEnum
+from RetroGeo import GeoLocator, ProcessTypeEnum
 from rgeocoder import ReverseGeocoder
 rg = ReverseGeocoder()
 
 async def main():
-    t = TicToc()
     rev = GeoLocator()
-    # locations = [(-73.2404,43.2342)]
-    # result = rev.query(locations,mode=ThreadTypeEnum.SINGLE_PROCESS)
-    # print(result)
+    locations = [(-73.2404,43.2342)]
+    result = rev.query(locations, mode=ProcessTypeEnum.SINGLE_PROCESS)
+    print(result)
     #
     # r = rg.nearest(43.2342, -73.2404)
     # print("Rust reverse")
@@ -42,15 +39,15 @@ async def main():
     #     (-58.3816, -34.6037)  # Buenos Aires, Argentina
     # ]
     # print(await rev.getLocationFromCoordinates(locations,mode=ThreadTypeEnum.MULTI_THREADED))
-    locations = []
-    for _ in range(10000000):
-        lat = random.uniform(-90, 90)
-        lon = random.uniform(-180, 180)
-        locations.append((lon, lat))
-    t.tic()
-    rev.query(locations, mode=ThreadTypeEnum.SINGLE_PROCESS)
-    t.toc()
-    print(f"Using SingleProcess for {len(locations)} locations = ",t.tocvalue(),"seconds")
+    # locations = []
+    # for _ in range(10000000):
+    #     lat = random.uniform(-90, 90)
+    #     lon = random.uniform(-180, 180)
+    #     locations.append((lon, lat))
+    # t.tic()
+    # rev.query(locations, mode=ThreadTypeEnum.SINGLE_PROCESS)
+    # t.toc()
+    # print(f"Using SingleProcess for {len(locations)} locations = ",t.tocvalue(),"seconds")
     # t.tic()
     # rev.query(locations, mode=ThreadTypeEnum.SINGLE_PROCESS)
     # t.toc()
@@ -58,5 +55,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    # asyncio.run(reverse_geocode(9.964498569974612, 76.25592213325532))
     asyncio.run(main())

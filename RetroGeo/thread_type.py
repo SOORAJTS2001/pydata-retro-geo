@@ -1,6 +1,6 @@
 from enum import Enum
 
 
-class ThreadTypeEnum(Enum):
+class ProcessTypeEnum(Enum):
     SINGLE_PROCESS = "SINGLE_PROCESS"
     MULTI_PROCESS = "MULTI_PROCESS"
