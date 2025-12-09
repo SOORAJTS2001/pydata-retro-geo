@@ -5,4 +5,4 @@
 /.idea
 .DS_Store
 /sample.py
-
+*__pycache__
