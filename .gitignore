@@ -3,6 +3,11 @@
 /venv
 /RetroGeo.egg-info
 /.idea
+
+__pycache__/
+*.pyc
+
 .DS_Store
+
 /sample.py
 
